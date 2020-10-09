@@ -1,0 +1,29 @@
+{
+  "name": "9_excercisetracker",
+  "version": "1.0.0",
+  "description": "\"# ExerciseTracker\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "start-watch": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nishchay271095/ExerciseTracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nishchay271095/ExerciseTracker/issues"
+  },
+  "homepage": "https://github.com/nishchay271095/ExerciseTracker#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
