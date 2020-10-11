@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -16,12 +17,16 @@ dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI, ()=>console.log(`Connected to DB!`));
 
+app.use(express.static(path.join(__dirname,'../public'))); // To Serve Static contents
+
+app.set('views', path.join(__dirname,'views'))
+app.set('view engine', 'ejs')
 app.use(cors({optionsSuccessStatus: 200}));
 app.use(express.json());
 app.use('/api/excercise',excerciseRouter);
 
 app.get('/', (req,res) => {
-    res.send(`Exercise tracker`);
+    res.render(`index`);
 });
 
 const LISTEN_PORT = process.env.PORT || 3000;
