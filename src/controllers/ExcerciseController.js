@@ -1,4 +1,5 @@
-const Excercise = require('../models/Excercise');
+const moment = require('moment');
+const Exercise = require('../models/Exercise');
 const UserController = require('./UserController');
 const mongoose = require('mongoose');
 
@@ -6,19 +7,29 @@ const createExcercise = async (req,res) => {
     let u_Id = req.body.userId;
     let desc = req.body.description;
     let dur_min = req.body.duration;
+    if(isNaN(dur_min))
+    {
+        return res.send('Provide vaid duration in mins');
+    }
     let dur_date = Date.now();
     if(req.body.date)
     {
-        // TODO: Validate Date
-        dur_date = new Date(req.body.date);
-        // console.log(dur_date.toString());
+        const isValidDate =  moment(req.body.date,"YYYY-M-D",true).isValid();
+        if(isValidDate)
+        {
+            dur_date = new Date(req.body.date);
+        }
+        else
+        {
+            return res.send(`Provide Valid Date in YYYY-MM-DD Format`);
+        }
     }
     try
     {
         let existedUser = await UserController.findUserById(u_Id);
         if(existedUser)
         {
-            let newExcercise = new Excercise({
+            let newExcercise = new Exercise({
                 userId: existedUser._id,
                 description: desc,
                 duration: dur_min,
@@ -78,18 +89,30 @@ const getExcercises = async (req,res) => {
             {
                 const idToCompare = new mongoose.Types.ObjectId(u_id);
                 // Note: we could've modified the  {} inside every if-else and at the end call .find({..}).
-                find_query = Excercise.find({userId: idToCompare});
+                find_query = Exercise.find({userId: idToCompare});
                 if(from){
-                    // TODO: Validate Date
+                    const isValidDate =  moment(from,"YYYY-M-D",true).isValid();
+                    if(!isValidDate)
+                    {
+                        return res.send(`Provide Valid from-Date in YYYY-MM-DD Format`);
+                    }
                     let fromDate = new Date(from);
                     find_query.where('date').gte(fromDate);
                 }
                 if(to){
-                    // TODO: Validate Date
+                    const isValidDate =  moment(to,"YYYY-M-D",true).isValid();
+                    if(!isValidDate)
+                    {
+                        return res.send(`Provide Valid to-Date in YYYY-MM-DD Format`);
+                    }
                     let toDate = new Date(to);
                     find_query.where('date').lte(toDate);
                 }
                 if(limit){
+                    if(isNaN(limit))
+                    {
+                        return res.send(`Provide Valid limit number`);
+                    }
                     let limit_val = parseInt(limit);
                     find_query.limit(limit_val);
                 }

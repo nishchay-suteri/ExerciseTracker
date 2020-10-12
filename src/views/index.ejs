@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Excercise Tracker</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>Welcome to Excersice Tracker</h1>
-    </body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Excercise Tracker</title>
+  </head>
+  <body>
+    <div class="container">
+        <h1>Excersice Tracker</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <form method="POST" action="/api/exercise/new-user">
+                    <h2>Create a New User</h2>
+                    <div class="form-group">
+                        <label for="username" >Username</label>
+                        <input type="text" class="form-control" id="uname" name="username" required placeholder="Provide a username">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form method="POST" action="/api/exercise/add">
+                    <h2>Add Excercises</h2>
+                    <div class="form-group">
+                        <label for="username" >UserID</label>
+                        <input type="text" class="form-control" id="uId" name="userId" required placeholder="Provide UserID*">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="desc" name="description" rows="3" required placeholder="Provide Description*"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration" >Duration</label>
+                        <input type="text" class="form-control" id="dur_min" name="duration" required placeholder="Provide Duration(in mins)">
+                    </div>
+                    <div class="form-group">
+                        <label for="date" >date</label>
+                        <input type="text" class="form-control" id="dur_date" name="date" placeholder="Procide Date (YYYY-MM-DD)">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
+  </body>
 </html>

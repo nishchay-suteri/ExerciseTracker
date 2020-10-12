@@ -2,35 +2,41 @@ const User = require('../models/User');
 
 const createNewUser = async (req,res) => {
     let userName = req.body.username;
-    // TODO: check username is passed or not
-    try
+    if(userName)
     {
-        let isUserExist = await User.findOne({username: userName});
-        if(isUserExist)
+        try
         {
-            return res.send(`Username ${userName} already taken`);
-        }
-        else
-        {
-            const newUser = new User({
-                username: userName
-            });
-            try{
-                const createdUser = await newUser.save();
-                const response = {username: createdUser.username, _id: createdUser._id.toString()};
-                return res.json(response);
-            }
-            catch(err)
+            let isUserExist = await User.findOne({username: userName});
+            if(isUserExist)
             {
-                console.error(err);
-                return res.status(400).send(`Server Error!`);
+                return res.send(`Username ${userName} already taken`);
             }
+            else
+            {
+                const newUser = new User({
+                    username: userName
+                });
+                try{
+                    const createdUser = await newUser.save();
+                    const response = {username: createdUser.username, _id: createdUser._id.toString()};
+                    return res.json(response);
+                }
+                catch(err)
+                {
+                    console.error(err);
+                    return res.status(400).send(`Server Error!`);
+                }
+            }
+        }
+        catch(err)
+        {
+            console.error(err);
+            return res.status(400).send(`Server Error!`);
         }
     }
-    catch(err)
+    else
     {
-        console.error(err);
-        return res.status(400).send(`Server Error!`);
+        return res.send(`Pass some vaid username`);
     }
 }
 

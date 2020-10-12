@@ -10,7 +10,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useCreateIndex', true);
 // mongoose.set('useFindAndModify', false);
 
-const excerciseRouter = require('./routes/excercise');
+const excerciseRouter = require('./routes/exercise');
 
 const app = express();
 dotenv.config();
@@ -22,8 +22,9 @@ app.use(express.static(path.join(__dirname,'../public'))); // To Serve Static co
 app.set('views', path.join(__dirname,'views'))
 app.set('view engine', 'ejs')
 app.use(cors({optionsSuccessStatus: 200}));
-app.use(express.json());
-app.use('/api/excercise',excerciseRouter);
+app.use(express.json()); // Parse JSON bodies (as sent by API clients)
+app.use(express.urlencoded({extended: true})); // Parse URL-encoded bodies (as sent by HTML forms)
+app.use('/api/exercise',excerciseRouter);
 
 app.get('/', (req,res) => {
     res.render(`index`);
