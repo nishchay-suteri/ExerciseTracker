@@ -40,6 +40,25 @@ const createNewUser = async (req,res) => {
     }
 }
 
+const getAllUsers = async (req,res) => {
+    try
+    {
+        let users = await User.find();
+        let response = [];
+        for(let i=0;i<users.length;i++)
+        {
+            response.push({username: users[i].username, _id: users[i]._id});
+        }
+        return res.json(response);
+    }
+    catch(err)
+    {
+        console.error(err);
+        return res.status(400).send(`Server Error!`);
+    }
+}
+
+
 const findUserById = async(uId) =>{
     const existedUser = await User.findById({_id: uId});
     return existedUser;
@@ -47,5 +66,6 @@ const findUserById = async(uId) =>{
 
 module.exports = {
     createNewUser,
-    findUserById
+    findUserById,
+    getAllUsers
 };

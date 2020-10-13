@@ -38,11 +38,11 @@ const createExcercise = async (req,res) => {
             try{
                 let createdExcercise = await newExcercise.save();
                 const response = {
-                    _id: createdExcercise.userId,
                     username: existedUser.username,
-                    date: createdExcercise.date.toDateString(),
-                    duration: createdExcercise.duration,
-                    description: createdExcercise.description
+                    description: createdExcercise.description,
+                    duration: Number( createdExcercise.duration),
+                    _id: createdExcercise.userId,
+                    date: createdExcercise.date.toDateString()
                 };
                 return res.json(response);
             }

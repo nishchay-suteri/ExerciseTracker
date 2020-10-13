@@ -20,4 +20,6 @@ router.post('/add', ExcerciseController.createExcercise);
 // @return {"_id":"5f817b2d2e4b4c2d4f3f6956","username":"testiiiiiinggg","count":3,"log":[{"description":"hi","duration":2,"date":"Sat Oct 10 2020"}]}
 router.get('/log', ExcerciseController.getExcercises);
 
+router.get('/users', UserController.getAllUsers);
+
 module.exports = router;
