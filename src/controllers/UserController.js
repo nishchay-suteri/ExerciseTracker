@@ -1,42 +1,41 @@
 const User = require('../models/User');
+const validator = require('../validation');
 
 const createNewUser = async (req,res) => {
-    let userName = req.body.username;
-    if(userName)
+    const validate = validator.userValidator(req.body);
+    if(validate.error)
     {
-        try
+        return res.status(400).send(validate.error.details[0].message);
+    }
+    const userName = req.body.username;
+    try
+    {
+        let isUserExist = await User.findOne({username: userName});
+        if(isUserExist)
         {
-            let isUserExist = await User.findOne({username: userName});
-            if(isUserExist)
-            {
-                return res.send(`Username ${userName} already taken`);
-            }
-            else
-            {
-                const newUser = new User({
-                    username: userName
-                });
-                try{
-                    const createdUser = await newUser.save();
-                    const response = {username: createdUser.username, _id: createdUser._id.toString()};
-                    return res.json(response);
-                }
-                catch(err)
-                {
-                    console.error(err);
-                    return res.status(400).send(`Server Error!`);
-                }
-            }
+            return res.send(`Username ${userName} already taken`);
         }
-        catch(err)
+        else
         {
-            console.error(err);
-            return res.status(400).send(`Server Error!`);
+            const newUser = new User({
+                username: userName
+            });
+            try{
+                const createdUser = await newUser.save();
+                const response = {username: createdUser.username, _id: createdUser._id.toString()};
+                return res.json(response);
+            }
+            catch(err)
+            {
+                console.error(err);
+                return res.status(400).send(`Server Error!`);
+            }
         }
     }
-    else
+    catch(err)
     {
-        return res.send(`Pass some vaid username`);
+        console.error(err);
+        return res.status(400).send(`Server Error!`);
     }
 }
 

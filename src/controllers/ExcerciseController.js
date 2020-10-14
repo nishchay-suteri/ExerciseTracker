@@ -2,15 +2,18 @@ const moment = require('moment');
 const Exercise = require('../models/Exercise');
 const UserController = require('./UserController');
 const mongoose = require('mongoose');
+const validator = require('../validation');
 
 const createExcercise = async (req,res) => {
+    const dataToValidate = {userId: req.body.userId, description: req.body.description, duration: req.body.duration};
+    const validate = validator.createExerciseValidator(dataToValidate);
+    if(validate.error)
+    {
+        return res.status(400).send(validate.error.details[0].message);
+    }
     let u_Id = req.body.userId;
     let desc = req.body.description;
     let dur_min = req.body.duration;
-    if(isNaN(dur_min))
-    {
-        return res.send('Provide vaid duration in mins');
-    }
     let dur_date = Date.now();
     if(req.body.date)
     {
