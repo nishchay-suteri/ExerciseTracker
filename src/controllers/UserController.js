@@ -1,15 +1,15 @@
 const User = require('../models/User');
-const validator = require('../validation');
+const UserValidator = require('../validation/User/UserValidation');
 
 const createNewUser = async (req,res) => {
-    const validate = validator.userValidator(req.body);
+    const validate = UserValidator.createUserValidator(req.body);
     if(validate.error)
     {
         return res.status(400).send(validate.error.details[0].message);
     }
-    const userName = req.body.username;
     try
     {
+        const userName = req.body.username;
         let isUserExist = await User.findOne({username: userName});
         if(isUserExist)
         {

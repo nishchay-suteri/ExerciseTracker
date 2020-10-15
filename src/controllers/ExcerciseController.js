@@ -2,11 +2,11 @@ const moment = require('moment');
 const Exercise = require('../models/Exercise');
 const UserController = require('./UserController');
 const mongoose = require('mongoose');
-const validator = require('../validation');
+const ExerciseValidator = require('../validation/Exercise/ExerciseValidation');
 
 const createExcercise = async (req,res) => {
     const dataToValidate = {userId: req.body.userId, description: req.body.description, duration: req.body.duration};
-    const validate = validator.createExerciseValidator(dataToValidate);
+    const validate = ExerciseValidator.createExerciseValidator(dataToValidate);
     if(validate.error)
     {
         return res.status(400).send(validate.error.details[0].message);
